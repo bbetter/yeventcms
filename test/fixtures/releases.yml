@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  environment: 1
+  released_at: 2024-06-07
+  event: one
+
+two:
+  environment: 1
+  released_at: 2024-06-07
+  event: two

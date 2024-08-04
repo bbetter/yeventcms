@@ -1,0 +1,92 @@
+<h1>Деталі Події</h1>
+
+<div class="event-container">
+  <div class="event-details card mb-3">
+    <div class="card-header bg-primary text-white">
+      <h2><%= @event.name %></h2>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Категорія:</strong>
+        <span class="badge badge-info"><%= @event.category.name %></span>
+      </p>
+      
+      <p class="card-text"><%= @event.description %></p>
+
+      <% if @event.event_params.any? %>
+        <p class="card-text"><strong>Параметри події:</strong></p>
+        <ul>
+          <% @event.event_params.each do |param| %>
+            <li><%= param.name %> - <%= param.description %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% if @event.attachments.any? %>
+        <p class="card-text"><strong>Вкладення:</strong></p>
+        <ul>
+          <% @event.attachments.each do |attachment| %>
+            <li><%= link_to attachment.filename.to_s, url_for(attachment) %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <div class="platform-dates">
+        <div>
+          <% if @event.ios_impl %>
+            <p class="card-text">
+              <i class="fa-brands fa-apple"></i> <strong>Впроваджено:</strong> <%= @event.ios_impl.strftime("%Y-%m-%d %H:%M:%S") %>
+            </p>
+          <% end %>
+          <% if @event.ios_release %>
+            <p class="card-text">
+              <i class="fa-brands fa-apple"></i> <strong>Випущено в App Store:</strong> <%= @event.ios_release.strftime("%Y-%m-%d %H:%M:%S") %>
+            </p>
+          <% end %>
+        </div>
+        <div>
+          <% if @event.android_impl %>
+            <p class="card-text">
+              <i class="fa-brands fa-android"></i> <strong>Впроваджено:</strong> <%= @event.android_impl.strftime("%Y-%m-%d %H:%M:%S") %>
+            </p>
+          <% end %>
+          <% if @event.android_release %>
+            <p class="card-text">
+              <i class="fa-brands fa-android"></i> <strong>Випущено в Play Market:</strong> <%= @event.android_release.strftime("%Y-%m-%d %H:%M:%S") %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comments-section expanded">
+    
+    <button class="expand-button" onclick="toggleComments()">Коментарі (<%= @event.comments.count %>)</button>
+
+    <div class="comments-content">
+      <div>
+        <%= render @event.comments %>
+      </div>
+
+      <div>
+        <%= render 'comments/form', commentable: @event, comment: Comment.new %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <%= link_to 'Назад', events_path, class: 'btn btn-primary' %>
+  <%= link_to 'Редагувати', edit_event_path(@event), class: 'btn btn-secondary' %>
+  <% if current_user.admin? %>
+    <%= link_to 'Видалити', event_path(@event), method: :delete, data: { confirm: 'Ви впевнені?' }, class: 'btn btn-danger' %>
+  <% end %>
+</div>
+
+<script>
+  function toggleComments() {
+    const commentsSection = document.querySelector('.comments-section');
+    commentsSection.classList.toggle('expanded');
+  }
+</script>

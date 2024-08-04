@@ -1,0 +1,30 @@
+<h1>New Event Parameter</h1>
+
+<%= form_with(model: @event_param, local: true) do |form| %>
+  <% if @event_param.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event_param.errors.count, "error") %> prohibited this event parameter from being saved:</h2>
+      <ul>
+        <% @event_param.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit 'Create Event Parameter', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', event_params_path, class: 'btn btn-secondary' %>

@@ -1,0 +1,28 @@
+<% events.each do |event| %>
+  <tr>
+    <td><%= event.name %></td>
+    <td><%= event.description %></td>
+    <td><%= event.category.name %></td>
+    <td>
+      <% if event.ios_impl.present? %>
+        <i class="fab fa-apple"></i> <%= event.ios_impl.strftime("%Y-%m-%d %H:%M") %><br>
+      <% end %>
+      <% if event.android_impl.present? %>
+        <i class="fab fa-android"></i> <%= event.android_impl.strftime("%Y-%m-%d %H:%M") %><br>
+      <% end %>
+    </td>
+    <td>
+      <% if event.ios_release.present? %>
+        <i class="fab fa-apple"></i> <%= event.ios_release.strftime("%Y-%m-%d %H:%M") %><br>
+      <% end %>
+      <% if event.android_release.present? %>
+        <i class="fab fa-android"></i> <%= event.android_release.strftime("%Y-%m-%d %H:%M") %><br>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to 'Показати', event, class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Редагувати', edit_event_path(event), class: 'btn btn-secondary btn-sm' %>
+      <%= link_to 'Видалити', event_path(event), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-danger btn-sm' %>
+    </td>
+  </tr>
+<% end %>

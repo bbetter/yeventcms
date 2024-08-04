@@ -1,0 +1,33 @@
+<!-- app/views/history/index.html.erb -->
+<h1>Історія змін</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Користувач</th>
+      <th>Дія</th>
+      <th>Елемент</th>
+      <th>Зміни</th>
+      <th>Дата</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @versions.each do |version| %>
+      <tr>
+        <td><%= User.find_by(id: version.whodunnit)&.email || 'Невідомо' %></td>
+        <td><%= version.event %></td>
+        <td><%= version.item_type %> <%= version.item_id %></td>
+        <td>
+          <% if version.changeset.present? %>
+            <ul>
+              <% version.changeset.each do |key, value| %>
+                <li><strong><%= key %></strong>: з <%= value[0].presence || '<blank>' %> на <%= value[1] %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </td>
+        <td><%= version.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

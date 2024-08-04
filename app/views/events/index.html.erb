@@ -1,0 +1,31 @@
+<!-- app/views/events/index.html.erb -->
+
+<div class="container mt-5">
+  <h2>Події</h2>
+
+  <div class="input-group mb-3" data-controller="search">
+    <%= text_field_tag :search, params[:search], id: 'search', class: 'form-control', placeholder: 'Пошук за назвою або описом', data: { action: 'input->search#search', search_target: 'input' } %>
+  </div>
+
+  <% if current_user.admin? %>
+      <%= link_to 'Нова Подія', new_event_path, class: 'btn btn-primary mb-3' %>
+  <% end %>
+
+  <table class="table table-striped" id="events-table">
+    <thead>
+    <tr>
+      <th>Назва</th>
+      <th>Опис</th>
+      <th>Категорія</th>
+      <th>Впровадження</th>
+      <th>Випуск в маркет</th>
+      <th>Дії</th>
+    </tr>
+  </thead>
+    <tbody data-search-target="results">
+      <%= render partial: 'events_table', locals: { events: @events } %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'Назад', home_path %>

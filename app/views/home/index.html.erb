@@ -1,0 +1,51 @@
+<!-- app/views/home/index.html.erb -->
+
+<h1>Dashboard</h1>
+
+<div class="dashboard">
+  <div class="latest-events">
+    <h2>Latest Events</h2>
+    <ul>
+      <% @latest_events.each do |event| %>
+        <li>
+          <strong><%= link_to event.name, event_path(event) %></strong>
+          <p><%= event.description %></p>
+          <p><strong>Category:</strong> <%= event.category.name %></p>
+          <p><strong>Created At:</strong> <%= event.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+        </li>
+      <% end %>
+    </ul>
+    <%= link_to 'View All Events', events_path, class: 'btn btn-link' %>
+  </div>
+
+  <div class="categories-stats">
+    <h2>Categories Statistics</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>iOS Implementation %</th>
+          <th>iOS Release %</th>
+          <th>Android Implementation %</th>
+          <th>Android Release %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><%= percentage(category.events.where.not(ios_impl: nil).count, category.events.count) %>%</td>
+            <td><%= percentage(category.events.where.not(ios_release: nil).count, category.events.count) %>%</td>
+            <td><%= percentage(category.events.where.not(android_impl: nil).count, category.events.count) %>%</td>
+            <td><%= percentage(category.events.where.not(android_release: nil).count, category.events.count) %>%</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div>
+  <%= link_to 'Події', events_path, class: 'btn btn-primary' %>
+  <%= link_to 'Параметри Подій', event_params_path, class: 'btn btn-secondary' %>
+</div>

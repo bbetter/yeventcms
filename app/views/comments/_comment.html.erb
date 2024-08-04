@@ -1,0 +1,12 @@
+<div class="comment mb-3 bubble">
+  <p class="email"> <%= comment.user.email %></p>
+  <p class="content"><%= comment.content %></p>
+  <% if comment.attachments.any? %>
+    <p><strong>Вкладення:</strong></p>
+    <ul>
+      <% comment.attachments.each do |attachment| %>
+        <li><%= link_to attachment.filename.to_s, url_for(attachment) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

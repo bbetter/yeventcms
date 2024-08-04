@@ -1,0 +1,87 @@
+  .comments-section {
+    width: 300px;
+    transition: width 0.3s ease;
+  }
+  
+  .comments-section .expand-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .comments-section .comments-content {
+    overflow: hidden;   
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+  
+  .comments-section.expanded {
+    width: 500px;
+  }
+  
+  .comments-section.expanded .comments-content {
+    max-height: 1000px; /* Adjust based on your content */
+  }
+  
+  .comment.bubble {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    margin-bottom: 15px;
+    max-width: 75%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .comment.bubble:before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: -10px; /* Adjust for left-aligned bubbles */
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #f1f1f1;
+  }
+  
+  .comment .email {
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .comment .content {
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+  
+  .comment strong {
+    font-weight: bold;
+  }
+  
+  .comment ul {
+    padding-left: 20px;
+    margin-top: 5px;
+    text-align: left; /* Align the attachments to the left */
+  }
+  
+  .comment ul li {
+    list-style-type: none;
+    margin-bottom: 5px;
+  }
+  
+  .comment ul li a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .comment ul li a:hover {
+    text-decoration: underline;
+  }
