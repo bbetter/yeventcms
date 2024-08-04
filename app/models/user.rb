@@ -11,7 +11,7 @@ class User < ApplicationRecord
    ROLE_PERMISSIONS = {
       manage_events: %i[analytic admin],
       open_edit: %i[analytic admin dev],
-      manage_releases: %i[dev]
+      manage_releases: %i[dev, admin]
   }.freeze
 
   # Generalized method to check if a user can perform a specific action

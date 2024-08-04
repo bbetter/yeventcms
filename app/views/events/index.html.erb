@@ -9,9 +9,7 @@
 
   <% if current_user.can_add_event? %>
       <%= link_to 'Нова Подія', new_event_path, class: 'btn btn-primary mb-3' %>
-  <% else %>
-      <div>TEST</div>
-  <% end>  
+  <% end %>
 
   <table class="table table-striped" id="events-table">
     <thead>

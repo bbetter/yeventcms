@@ -9,7 +9,8 @@
   <%= @event_param.description %>
 </p>
 
-<% if current_user.manage_events? %>
+<% if current_user.can_manage_event_params? %>
   <%= link_to 'Редагувати', edit_event_param_path(@event_param) %> |
+  <%= link_to 'Видалити', event_param_path(@event_param), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-danger btn-sm' %>
 <% end %>
 <%= link_to 'Назад', event_params_path %>

@@ -1,7 +1,7 @@
 <%= form_with(model: @event, local: true, html: { multipart: true }) do |form| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "помилка") %> заважають зберегти цю подію:</h2>
+      <h2><%= pluralize(@event.errors.count, "error") %> prevented this event from being saved:</h2>
       <ul>
         <% @event.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,8 +10,6 @@
     </div>
   <% end %>
 
-
- <% if current_user.can_edit_events %>
   <div class="form-group">
     <%= form.label :name, "Ім'я" %>
     <%= form.text_field :name, class: 'form-control' %>
@@ -32,42 +30,34 @@
     <%= form.text_field :new_category, class: 'form-control', id: 'new_category_input', placeholder: 'Назва', style: 'display:none;', data: { category_target: 'newCategoryInput' } %>
   </div>
 
+  <div class="form-group" data-controller="event-params">
+    <%= form.label :event_params, "Параметри події" %>
+    <%= form.collection_select :event_param_ids, @event_params, :id, :name, {}, { multiple: true, class: 'form-control', id: 'event_param_ids', data: { event_params_target: 'eventParamsSelect' } } %>
+    
+    <div id="new-event-params">
+      <label>
+        <input type="checkbox" id="add_new_event_param_checkbox" data-event-params-target="addNewEventParamCheckbox" data-action="event-params#toggle"> Або створіть новий параметр
+      </label>
+      
+      <!-- Hidden container for dynamic inputs -->
+      <div id="new-event-params-container" style="display:none;" data-event-params-target="newEventParamsContainer">
+        <!-- Ensure that input names end with [] to be treated as an array -->
+        <div class="input-group mb-3">
+          <input type="text" name="event[new_event_params][]" class="form-control" placeholder="Назва параметра">
+          <button type="button" class="btn btn-danger" data-action="click->event-params#removeInput">Видалити</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-secondary" data-event-params-target="addInputButton" data-action="click->event-params#addInput" style="display:none;">Додати параметр</button>
+    </div>
+  </div>
+
   <div class="form-group">  
     <%= form.label :attachments, "Вкладення" %>
     <%= form.file_field :attachments, multiple: true, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= form.label :event_params, "Параметри події" %>
-    <%= form.collection_select :event_param_ids, @event_params, :id, :name, {}, { multiple: true, class: 'form-control' } %>
-  </div>
-
-  <% end %>
-
-  <% if current_user.can_manage_releases% >
-  <div class="form-group">
-    <%= form.label :ios_impl, "Дата впровадження для iOS" %>
-    <%= form.datetime_field :ios_impl, include_blank: true, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :android_impl, "Дата впровадження для Android" %>
-    <%= form.datetime_field :android_impl, include_blank: true, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :ios_release, "Дата випуску для iOS" %>
-    <%= form.datetime_field :ios_release, include_blank: true, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :android_release, "Дата випуску для Android" %>
-    <%= form.datetime_field :android_release, include_blank: true, class: 'form-control' %>
-  </div>
-
-  <%end%>
-
- <div class="form-group">
     <%= form.submit submit_text, class: 'btn btn-primary' %>
   </div>
 <% end %>

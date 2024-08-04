@@ -1,6 +1,6 @@
 class EventParamsController < ApplicationController
     before_action :set_event_param, only: [ :show, :edit, :update, :destroy ]
-    before_action :authenticate_admin!, except: [ :index, :show ]
+    before_action :authenticate_user!
 
     def index
       @event_params = EventParam.all.order(:name)
@@ -34,6 +34,9 @@ class EventParamsController < ApplicationController
     end
 
     def destroy
+      @event_param.events.each do |event|
+        event.event_params.delete(@event_param)
+      end
       @event_param.destroy
       redirect_to event_params_url, notice: 'Event parameter was successfully destroyed.'
     end

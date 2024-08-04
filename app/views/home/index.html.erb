@@ -4,30 +4,30 @@
 
 <div class="dashboard">
   <div class="latest-events">
-    <h2>Latest Events</h2>
+    <h2>Останні події</h2>
     <ul>
       <% @latest_events.each do |event| %>
         <li>
           <strong><%= link_to event.name, event_path(event) %></strong>
           <p><%= event.description %></p>
-          <p><strong>Category:</strong> <%= event.category.name %></p>
-          <p><strong>Created At:</strong> <%= event.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+          <p><strong>Категорія:</strong> <%= event.category.name %></p>
+          <p><strong>Створено:</strong> <%= event.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
         </li>
       <% end %>
     </ul>
-    <%= link_to 'View All Events', events_path, class: 'btn btn-link' %>
+    <%= link_to 'Усі події', events_path, class: 'btn btn-link' %>
   </div>
 
   <div class="categories-stats">
-    <h2>Categories Statistics</h2>
+    <h2>Статистика</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Category</th>
-          <th>iOS Implementation %</th>
-          <th>iOS Release %</th>
-          <th>Android Implementation %</th>
-          <th>Android Release %</th>
+          <th>Категорія</th>
+          <th>iOS Впроваджено %</th>
+          <th>iOS Випуск %</th>
+          <th>Android Впроваджено %</th>
+          <th>Android Випуск %</th>
         </tr>
       </thead>
       <tbody>
