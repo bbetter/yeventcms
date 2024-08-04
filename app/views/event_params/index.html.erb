@@ -2,7 +2,7 @@
 
 <div class="container mt-5">
   <h2>Параметри Подій</h2>
-  <% if current_user.admin? %>
+  <% if current_user.can_manage_event_params? %>
   <%= link_to 'Новий Параметр Події', new_event_param_path, class: 'btn btn-primary mb-3' %>
   <% end %>
   <table class="table table-striped">
@@ -20,7 +20,7 @@
           <td><%= truncate(event_param.description, length: 50) %></td>
           <td>
             <%= link_to 'Показати', event_param_path(event_param), class: 'btn btn-primary btn-sm' %>
-            <% if current_user.admin? %>
+            <% if current_user.can_manage_event_params? %>
             <%= link_to 'Редагувати', edit_event_param_path(event_param), class: 'btn btn-secondary btn-sm' %>
             <%= link_to 'Видалити', event_param_path(event_param), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-danger btn-sm' %>
             <% end %>

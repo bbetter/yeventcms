@@ -1,4 +1,4 @@
-class DropReleasesTable < ActiveRecord::Migration[7.2]
+class DropReleasesTable < ActiveRecord::Migration[7.0]
   def change
     drop_table :releases do |t|
       t.integer :event_id

@@ -1,4 +1,4 @@
-class CreateReleases < ActiveRecord::Migration[7.2]
+class CreateReleases < ActiveRecord::Migration[7.0]
   def change
     create_table :releases do |t|
       t.integer :environment

@@ -9,7 +9,7 @@
   <%= @event_param.description %>
 </p>
 
-<% if current_user.admin? %>
+<% if current_user.manage_events? %>
   <%= link_to 'Редагувати', edit_event_param_path(@event_param) %> |
 <% end %>
 <%= link_to 'Назад', event_params_path %>

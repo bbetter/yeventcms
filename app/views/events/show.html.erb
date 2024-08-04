@@ -78,8 +78,10 @@
 
 <div>
   <%= link_to 'Назад', events_path, class: 'btn btn-primary' %>
+  <% if current_user.can_open_edit? %>
   <%= link_to 'Редагувати', edit_event_path(@event), class: 'btn btn-secondary' %>
-  <% if current_user.admin? %>
+  <% end %>
+  <% if current_user.can_delete_event? %>
     <%= link_to 'Видалити', event_path(@event), method: :delete, data: { confirm: 'Ви впевнені?' }, class: 'btn btn-danger' %>
   <% end %>
 </div>
