@@ -15,7 +15,7 @@
     <ul>
       <% @latest_events.each do |event| %>
         <li>
-          <strong><%= link_to event.name, event_path(event) %></strong>
+          <strong class="event-link"><%= link_to event.name, event_path(event) %></strong>
           <p><%= event.description %></p>
           <p><strong>Категорія:</strong> <%= event.category.name %></p>
           <p><strong>Створено:</strong> <%= event.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
