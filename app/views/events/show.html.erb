@@ -78,7 +78,7 @@
 
 <div>
   <%= link_to 'Назад', events_path, class: 'btn btn-primary' %>
-  <% if current_user.can_open_edit? %>
+  <% if current_user.can_open_event_edit? %>
   <%= link_to 'Редагувати', edit_event_path(@event), class: 'btn btn-secondary' %>
   <% end %>
   <% if current_user.can_delete_event? %>

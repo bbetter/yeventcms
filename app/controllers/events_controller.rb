@@ -42,10 +42,11 @@ class EventsController < ApplicationController
       handle_category
       handle_event_params
 
-      puts @category
-      puts @event_param_ids
-  
-      if @event.update(db_only_params.merge(category_id: @category.id, event_param_ids: @event_param_ids))
+      update_params = db_only_params
+      update_params[:event_param_ids] = @event_param_ids if @event_param_ids.present?
+      update_params[:category_id] = @category.id if @category.present?
+
+      if @event.update(update_params)
         redirect_to @event, notice: 'Event was successfully updated.'
       else
         @event_params = EventParam.all
@@ -88,8 +89,9 @@ class EventsController < ApplicationController
     def handle_category
         if custom_params[:new_category].present?
             @category = Category.find_or_create_by(name: custom_params[:new_category])
-        else
+        elsif custom_params[:category_id].present?
             @category = Category.find(custom_params[:category_id])
+        else
         end
     end
   

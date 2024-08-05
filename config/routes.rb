@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :event_params
+  resources :categories
 
    get 'history', to: 'history#index'
 

@@ -10,6 +10,7 @@
     </div>
   <% end %>
 
+  <%if current_user.can_edit_event? %>
   <div class="form-group">
     <%= form.label :name, "Ім'я" %>
     <%= form.text_field :name, class: 'form-control' %>
@@ -56,6 +57,30 @@
     <%= form.label :attachments, "Вкладення" %>
     <%= form.file_field :attachments, multiple: true, class: 'form-control' %>
   </div>
+  <%end%>
+
+  <% if current_user.can_manage_releases? %>
+  <div class="form-group">
+    <%= form.label :ios_impl, "Дата впровадження для iOS" %>
+    <%= form.datetime_field :ios_impl, include_blank: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :android_impl, "Дата впровадження для Android" %>
+    <%= form.datetime_field :android_impl, include_blank: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :ios_release, "Дата випуску для iOS" %>
+    <%= form.datetime_field :ios_release, include_blank: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :android_release, "Дата випуску для Android" %>
+    <%= form.datetime_field :android_release, include_blank: true, class: 'form-control' %>
+  </div>
+
+  <%end%>
 
   <div class="form-group">
     <%= form.submit submit_text, class: 'btn btn-primary' %>

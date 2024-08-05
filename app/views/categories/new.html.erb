@@ -1,0 +1,6 @@
+<!-- app/views/categories/new.html.erb -->
+<h1>Нова категорія</h1>
+
+<%= render 'form', category: @category, submit_text: "Створити" %>
+
+<%= link_to 'Назад', categories_path, class: 'btn btn-link' %>

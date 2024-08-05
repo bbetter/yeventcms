@@ -1,0 +1,30 @@
+<!-- app/views/categories/index.html.erb -->
+<h1>Категорії</h1>
+
+<%= link_to 'Нова категорія', new_category_path, class: 'btn btn-primary' %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Ім'я</th>
+      <th>Дії</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td>
+          <%= link_to 'Показати', category, class: 'btn btn-primary btn-sm' %>
+          <% if current_user.can_manage_categories? %>
+          <%= link_to 'Редагувати', edit_category_path(category), class: 'btn btn-secondary btn-sm' %>
+          <%= link_to 'Видалити', category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені? Зверніть увагу що усі події цієї категорії також будуть знищені.' }, class: 'btn btn-danger btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Назад', home_path, class: 'btn btn-link' %>
+

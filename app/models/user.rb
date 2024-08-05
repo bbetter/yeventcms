@@ -8,10 +8,10 @@ class User < ApplicationRecord
   has_paper_trail
 
    # Define roles with specific permissions
-   ROLE_PERMISSIONS = {
-      manage_events: %i[analytic admin],
-      open_edit: %i[analytic admin dev],
-      manage_releases: %i[dev, admin]
+  ROLE_PERMISSIONS = {
+      manage_entities: %i[analytic admin],
+      open_event_edit: %i[analytic admin dev],
+      manage_releases: %i[dev admin]
   }.freeze
 
   # Generalized method to check if a user can perform a specific action
@@ -19,28 +19,32 @@ class User < ApplicationRecord
     ROLE_PERMISSIONS[action.to_sym]&.include?(role.to_sym) || false
   end
 
-  # Specific permission methods
+  def can_manage_categories?
+    can?(:manage_entities)
+  end
+
   def can_add_event?
-    can?(:manage_events)
-  end
-
-  def can_delete_event?
-    can?(:manage_events)
-  end
-
-  def can_edit_event?
-    can?(:manage_events)
+    can?(:manage_entities)
   end
 
   def can_manage_event_params?
-    can?(:manage_events)
+    can?(:manage_entities)
   end
 
-  def can_open_edit?
-    can?(:open_edit)
+  def can_delete_event?
+    can?(:manage_entities)
+  end
+
+  def can_edit_event?
+    can?(:manage_entities)
+  end
+
+  def can_open_event_edit?
+    can?(:open_event_edit)
   end
 
   def can_manage_releases?
     can?(:manage_releases)
   end
+
 end

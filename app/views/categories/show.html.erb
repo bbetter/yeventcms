@@ -1,0 +1,17 @@
+<h1>Події категорії: "<%= @category.name %>"</h1>
+
+ <table class="table table-striped" id="events-table">
+    <thead>
+    <tr>
+      <th>Назва</th>
+      <th>Опис</th>
+      <th>Категорія</th>
+      <th>Впровадження</th>
+      <th>Випуск в маркет</th>
+      <th>Дії</th>
+    </tr>
+  </thead>
+    <tbody data-search-target="results">
+      <%= render partial: 'events/events_table', locals: { events: @category.events } %>
+    </tbody>
+  </table>

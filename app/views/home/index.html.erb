@@ -1,6 +1,13 @@
 <!-- app/views/home/index.html.erb -->
 
-<h1>Dashboard</h1>
+<h1>Дешборд</h1>
+
+<div>
+  <%= link_to 'Події', events_path, class: 'btn btn-primary' %>
+  <%= link_to 'Параметри Подій', event_params_path, class: 'btn btn-secondary' %>
+  <%= link_to 'Категорії', categories_path, class: 'btn btn-success' %>
+</div>
+
 
 <div class="dashboard">
   <div class="latest-events">
@@ -43,9 +50,4 @@
       </tbody>
     </table>
   </div>
-</div>
-
-<div>
-  <%= link_to 'Події', events_path, class: 'btn btn-primary' %>
-  <%= link_to 'Параметри Подій', event_params_path, class: 'btn btn-secondary' %>
 </div>
