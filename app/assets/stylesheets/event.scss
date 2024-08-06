@@ -74,10 +74,15 @@
     color: #005C7A;
     background-color: transparent; 
     border: 1px solid #005C7A;
+    white-space: nowrap;
 }
 
 .btn-custom-color:hover {
     background-color: rgba(0, 69, 92, 0.1);
     color: #00455C;;
     border-color: #00455C;
+}
+
+.search-field {
+  max-width: 40%;
 }
