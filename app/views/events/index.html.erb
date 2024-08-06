@@ -3,13 +3,17 @@
 <div class="container mt-5">
   <h2>Події</h2>
 
-  <div class="input-group mb-3" data-controller="search">
-    <%= text_field_tag :search, params[:search], id: 'search', class: 'form-control', placeholder: 'Пошук за назвою або описом', data: { action: 'input->search#search', search_target: 'input' } %>
-  </div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Пошукове поле -->
+    <div class="input-group" data-controller="search">
+      <%= text_field_tag :search, params[:search], id: 'search', class: 'form-control search-field', placeholder: 'Пошук за назвою або описом', data: { action: 'input->search#search', search_target: 'input' } %>
+    </div>
 
-  <% if current_user.can_add_event? %>
-      <%= link_to 'Нова Подія', new_event_path, class: 'btn btn-primary mb-3' %>
-  <% end %>
+    <!-- Кнопка "Нова Подія" -->
+    <% if current_user.can_add_event? %>
+      <%= link_to 'Нова Подія', new_event_path, class: 'btn btn-custom-color' %>
+    <% end %>
+  </div>
 
   <table class="table table-striped" id="events-table">
     <thead>
@@ -28,4 +32,4 @@
   </table>
 </div>
 
-<%= link_to 'Назад', home_path %>
+<%= link_to 'Назад', home_path, class: 'btn btn-link'%>
