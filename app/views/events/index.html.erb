@@ -8,7 +8,7 @@
   </div>
 
   <% if current_user.can_add_event? %>
-      <%= link_to 'Нова Подія', new_event_path, class: 'btn btn-primary mb-3' %>
+      <%= link_to 'Нова Подія', new_event_path, class: 'btn btn-custom-color mb-3' %>
   <% end %>
 
   <table class="table table-striped" id="events-table">
@@ -28,4 +28,4 @@
   </table>
 </div>
 
-<%= link_to 'Назад', home_path %>
+<%= link_to 'Назад', home_path, class: 'btn btn-link'%>
