@@ -77,12 +77,12 @@
 </div>
 
 <div>
-  <%= link_to 'Назад', events_path, class: 'btn btn-primary' %>
+  <%= link_to 'Назад', events_path, class: 'btn btn-outline-primary btn-sm', title: 'Назад' %>
   <% if current_user.can_open_event_edit? %>
-  <%= link_to 'Редагувати', edit_event_path(@event), class: 'btn btn-secondary' %>
+  <%= link_to '✏️', edit_event_path(@event), class: 'btn btn-outline-primary btn-sm', title: 'Редагувати' %>
   <% end %>
   <% if current_user.can_delete_event? %>
-    <%= link_to 'Видалити', event_path(@event), method: :delete, data: { confirm: 'Ви впевнені?' }, class: 'btn btn-danger' %>
+    <%= link_to '🗑️', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-outline-primary btn-sm', title: 'Видалити' %>
   <% end %>
 </div>
 

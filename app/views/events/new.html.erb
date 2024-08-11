@@ -1,6 +1,8 @@
-<h1>Нова подія</h1>
+<div class="newEvent_container">
+  <h1>Нова подія</h1>
+  <%= link_to 'Назад', events_path, class: 'btn btn-custom-color' %>
+</div>
 
 
 <%= render 'form', event: @event, event_params: @event_params, submit_text: 'Створити' %>
 
-<%= link_to 'Назад', events_path, class: 'btn btn-secondary' %>

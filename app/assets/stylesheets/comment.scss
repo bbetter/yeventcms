@@ -1,6 +1,12 @@
+  @import '../styles/mediaQueries.scss';
   .comments-section {
-    width: 300px;
+    width: 100%;
+    margin-top: 20px;
     transition: width 0.3s ease;
+      @include tablet {
+        width: 300px;
+        margin-top: 0;
+      }
   }
   
   .comments-section .expand-button {
@@ -20,11 +26,25 @@
   }
   
   .comments-section.expanded {
-    width: 500px;
+    width: 100%;
+    @include tablet {
+      width: 500px;
+    }
   }
   
   .comments-section.expanded .comments-content {
     max-height: 1000px; /* Adjust based on your content */
+  }
+
+  @include tablet {
+    .comments-section {
+      width: 300px;
+      margin-top: 0;
+    }
+
+    .comments-section.expanded {
+      width: 500px;
+    }
   }
   
   .comment.bubble {
@@ -85,3 +105,5 @@
   .comment ul li a:hover {
     text-decoration: underline;
   }
+
+  

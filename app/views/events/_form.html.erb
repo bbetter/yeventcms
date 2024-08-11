@@ -1,4 +1,4 @@
-<%= form_with(model: @event, local: true, html: { multipart: true }) do |form| %>
+<%= form_with(model: @event, local: true, html: { multipart: true, class: 'form_container' }) do |form| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@event.errors.count, "error") %> prevented this event from being saved:</h2>
@@ -83,6 +83,6 @@
   <%end%>
 
   <div class="form-group">
-    <%= form.submit submit_text, class: 'btn btn-primary' %>
+    <%= form.submit submit_text, class: 'btn btn_primary' %>
   </div>
 <% end %>
