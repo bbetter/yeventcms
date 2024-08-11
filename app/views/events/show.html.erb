@@ -25,12 +25,22 @@
       <% end %>
 
       <% if @event.attachments.any? %>
-        <p class="card-text"><strong>Вкладення:</strong></p>
-        <ul>
-          <% @event.attachments.each do |attachment| %>
-            <li><%= link_to attachment.filename.to_s, url_for(attachment) %></li>
-          <% end %>
-        </ul>
+        <div class="attachments-section expanded">
+          <button class="expand-button btn btn-custom-color" onclick="toggleAttachments()">Вкладення (<%= @event.attachments.count %>)</button>
+          <div class="attachments-content">
+            <div class="attachments-slider">
+              <button class="slider-nav prev" onclick="scrollAttachments(-1)">&#9664;</button>
+              <div class="attachments-list">
+                <% @event.attachments.each do |attachment| %>
+                  <div class="attachment-item">
+                    <%= link_to attachment.filename.to_s, url_for(attachment) %>
+                  </div>
+                <% end %>
+              </div>
+              <button class="slider-nav next" onclick="scrollAttachments(1)">&#9654;</button>
+            </div>
+          </div>
+        </div>
       <% end %>
 
       <div class="platform-dates">
@@ -63,17 +73,15 @@
   </div>
 
   <div class="comments-section expanded">
-    
     <button class="expand-button btn btn-custom-color" onclick="toggleComments()">Коментарі (<%= @event.comments.count %>)</button>
-
     <div class="comments-content">
-       <div class="comments-slider">
-      <button class="slider-nav prev" onclick="scrollSlider(-1)">&#10094;</button>
-      <div class="comments-list">
-        <%= render @event.comments %>
+      <div class="comments-slider">
+        <button class="slider-nav prev" onclick="scrollSlider(-1)">&#9650;</button>
+        <div class="comments-list">
+          <%= render @event.comments %>
+        </div>
+        <button class="slider-nav next" onclick="scrollSlider(1)">&#9660;</button>
       </div>
-      <button class="slider-nav next" onclick="scrollSlider(1)">&#10095;</button>
-    </div>
       <div>
         <%= render 'comments/form', commentable: @event, comment: Comment.new %>
       </div>
@@ -83,24 +91,24 @@
 
 <div>
   <% if current_user.can_open_event_edit? %>
-  <%= link_to '✏️', edit_event_path(@event), class: 'btn btn-custom-color btn-sm', title: 'Редагувати' %>
+    <%= link_to '✏️', edit_event_path(@event), class: 'btn btn-custom-color btn-sm', title: 'Редагувати' %>
   <% end %>
   <% if current_user.can_delete_event? %>
     <%= link_to '🗑️', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-custom-color btn-sm', title: 'Видалити' %>
   <% end %>
 </div>
-
 <script>
   function toggleComments() {
     const commentsSection = document.querySelector('.comments-section');
     commentsSection.classList.toggle('expanded');
   }
   function scrollSlider(direction) {
-    const slider = document.querySelector('.comments-list');
-    const scrollAmount = 300; // Amount to scroll per click
-    slider.scrollBy({
-      left: direction * scrollAmount,
-      behavior: 'smooth'
-    });
-  }
+  const slider = document.querySelector('.comments-list');
+  const scrollAmount = 300; // Кількість для прокрутки за клік
+  slider.scrollBy({
+    top: direction * scrollAmount,
+    behavior: 'smooth'
+  });
+}
+
 </script>

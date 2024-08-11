@@ -30,9 +30,11 @@
 
 .comments-slider {
   display: flex;
+  flex-direction: column;
   align-items: center;
   overflow: hidden;
   position: relative;
+  height: 300px; 
 }
 
 .slider-nav {
@@ -42,41 +44,115 @@
   cursor: pointer;
   font-size: 24px;
   height: 40px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   width: 40px;
+  position: absolute;
   z-index: 10;
 }
 
 .prev {
-  left: -10px;
+  top: 0;
+  right: 0;
+  color: #005C7A;
 }
 
 .next {
-  right: -10px;
+  bottom: 0;
+  right: 0;
+  color: #005C7A;
 }
 
 .comments-list {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-direction: column;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  height: 100%;
   width: 100%;
+
+  scrollbar-width: none; /* Для Firefox */
+  -ms-overflow-style: none;  /* Для IE та Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Для Chrome, Safari та Opera */
+  }
+}
+.attachments-slider {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  flex-direction: row; 
+  height: 100px; 
+}
+
+.slider-nav {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  z-index: 10;
+}
+
+.attachments-slider .prev {
+  left: 0;
+  top: 50%;
+  color: #005C7A;
+}
+
+.attachments-slider .next {
+  right: 0;
+  top: 50%;
+  color: #005C7A;
+}
+
+.attachments-list {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
+
+  scrollbar-width: none; /* Для Firefox */
+  -ms-overflow-style: none;  /* Для IE та Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Для Chrome, Safari та Opera */
+  }
+}
+
+.attachment-item {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  max-height: 50px;
+  background-color: rgba(108,117, 125 , 0.16);
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  white-space: nowrap; 
+}
+
+.attachment-item a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #007398;
 }
 
 .comment.bubble {
-  flex: 0 0 auto; // Запобігає зменшенню елементів
-  width: 300px; // Налаштуйте ширину кожного коментаря
+  flex: 0 0 auto; 
+  max-width: 400px; 
   background-color: #f1f1f1;
   border-radius: 10px;
   padding: 15px 25px;
   position: relative;
-  margin-right: 15px; // Простір між коментарями
+  margin-right: 15px; 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  overflow: hidden; // Сховати текст, що виходить за межі
+  overflow: hidden; 
 }
 
 .comment.bubble:before {
@@ -100,7 +176,7 @@
 .comment .content {
   font-size: 1em;
   margin-bottom: 10px;
-  overflow-wrap: break-word; // Перенос довгих слів на новий рядок
+  overflow-wrap: break-word; 
 }
 
 .comment strong {

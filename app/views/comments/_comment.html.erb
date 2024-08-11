@@ -1,12 +1,39 @@
 <div class="comment mb-3 bubble">
-  <p class="email"> <%= comment.user.email %></p>
+  <p class="email"><%= comment.user.email %></p>
   <p class="content"><%= comment.content %></p>
+
   <% if comment.attachments.any? %>
-    <p><strong>Вкладення:</strong></p>
-    <ul>
-      <% comment.attachments.each do |attachment| %>
-        <li><%= link_to attachment.filename.to_s, url_for(attachment) %></li>
-      <% end %>
-    </ul>
+    <% if comment.attachments.count >= 3 %>
+      <div class="attachments-slider">
+        <button class="slider-nav prev" onclick="scrollAttachments(this, -1)">&lt;</button>
+        <div class="attachments-list">
+          <% comment.attachments.each do |attachment| %>
+            <div class="attachment-item">
+              <%= link_to attachment.filename.to_s, url_for(attachment) %>
+            </div>
+          <% end %>
+        </div>
+        <button class="slider-nav next" onclick="scrollAttachments(this, 1)">&gt;</button>
+      </div>
+    <% else %>
+      <div class="attachments-list">
+        <% comment.attachments.each do |attachment| %>
+          <div class="attachment-item">
+            <%= link_to attachment.filename.to_s, url_for(attachment) %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 </div>
+
+<script>
+function scrollAttachments(button, direction) {
+  const slider = button.closest('.attachments-slider').querySelector('.attachments-list');
+  const scrollAmount = 300; // Кількість для прокрутки за клік
+  slider.scrollBy({
+    left: direction * scrollAmount,
+    behavior: 'smooth'
+  });
+}
+</script>
