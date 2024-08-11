@@ -1,16 +1,20 @@
 <!-- app/views/event_params/show.html.erb -->
-<p>
-  <strong>Назва:</strong>
-  <%= @event_param.name %>
-</p>
+<div class="form_container">
 
-<p>
-  <strong>Опис:</strong>
-  <%= @event_param.description %>
-</p>
+  <p>
+    <strong>Назва:</strong>
+    <%= @event_param.name %>
+  </p>
 
-<% if current_user.can_manage_event_params? %>
-  <%= link_to 'Редагувати', edit_event_param_path(@event_param) %> |
-  <%= link_to 'Видалити', event_param_path(@event_param), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-danger btn-sm' %>
-<% end %>
-<%= link_to 'Назад', event_params_path %>
+  <p>
+    <strong>Опис:</strong>
+    <%= @event_param.description %>
+  </p>
+  <div class='buttons-container'>
+  <% if current_user.can_manage_event_params? %>
+    <%= link_to '✏️', edit_event_param_path(@event_param), class: 'btn btn-outline-primary btn-sm', title: 'Редагувати' %>
+    <%= link_to '🗑️', event_param_path(@event_param), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-outline-primary btn-sm', title: 'Видалити' %>
+  <% end %>
+  </div>
+</div>
+<%= link_to 'Назад', event_params_path, class: 'btn-link' %>

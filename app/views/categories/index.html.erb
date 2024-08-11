@@ -1,7 +1,8 @@
 <!-- app/views/categories/index.html.erb -->
-<h1>Категорії</h1>
-
-<%= link_to 'Нова категорія', new_category_path, class: 'btn btn-primary' %>
+<div class="title_container">
+  <h1>Категорії</h1>
+  <%= link_to 'Нова категорія', new_category_path, class: 'btn btn-custom-color' %>
+</div>
 
 <table class="table table-striped">
   <thead>
@@ -15,10 +16,10 @@
       <tr>
         <td><%= category.name %></td>
         <td>
-          <%= link_to 'Показати', category, class: 'btn btn-primary btn-sm' %>
+          <%= link_to '🔍', category, class: 'btn btn-custom-color btn-sm', title: 'Показати' %>
           <% if current_user.can_manage_categories? %>
-          <%= link_to 'Редагувати', edit_category_path(category), class: 'btn btn-secondary btn-sm' %>
-          <%= link_to 'Видалити', category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені? Зверніть увагу що усі події цієї категорії також будуть знищені.' }, class: 'btn btn-danger btn-sm' %>
+          <%= link_to '✏️', edit_category_path(category), class: 'btn btn-custom-color btn-sm', title: 'Редагувати' %>
+          <%= link_to '🗑️', category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені? Зверніть увагу що усі події цієї категорії також будуть знищені.' }, class: 'btn btn-custom-color btn-sm', title: 'Видалити' %>
           <% end %>
         </td>
       </tr>

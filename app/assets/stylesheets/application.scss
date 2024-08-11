@@ -21,9 +21,12 @@
 @import "comment";
 @import "dashboard";
 
+.card {
+  border-radius: 15px;
+}
 
 .card-header {
-  background-color: #007bff;
+  background-color: #005C7A;
   color: white;
   padding: 15px;
   font-size: 1.5em;
@@ -38,7 +41,7 @@
 }
 
 .badge-info {
-  background-color: #17a2b8;
+  background-color: #f03c0f;
   color: white;
   padding: 5px 10px;
   font-size: 1em;

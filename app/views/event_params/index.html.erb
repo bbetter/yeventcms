@@ -1,10 +1,13 @@
 <!-- app/views/event_params/index.html.erb -->
 
 <div class="container mt-5">
-  <h2>Параметри Подій</h2>
-  <% if current_user.can_manage_event_params? %>
-  <%= link_to 'Новий Параметр Події', new_event_param_path, class: 'btn btn-primary mb-3' %>
-  <% end %>
+  <div class="title_container">
+    <h2>Параметри Подій</h2>
+    <% if current_user.can_manage_event_params? %>
+      <%= link_to 'Новий Параметр Події', new_event_param_path, class: 'btn btn-custom-color' %>
+    <% end %>
+  </div>
+
   <table class="table table-striped">
     <thead>
       <tr>
@@ -16,13 +19,22 @@
     <tbody>
       <% @event_params.each do |event_param| %>
         <tr>
-          <td><%= link_to event_param.name, event_param_path(event_param) %></td>
-          <td><%= truncate(event_param.description, length: 50) %></td>
+          <td><%= link_to event_param.name, event_param_path(event_param), class: 'btn-link' %></td>
+          <td class="description-cell">
+            <input type="checkbox" id="toggle-description-<%= event_param.id %>" class="toggle-description" />
+            <label for="toggle-description-<%= event_param.id %>" class="show-more-label"></label>
+            <span class="short-description">
+              <%= truncate(event_param.description, length: 50) %>
+            </span>
+            <span class="full-description">
+              <%= event_param.description %>
+            </span>
+          </td>
           <td>
-            <%= link_to 'Показати', event_param_path(event_param), class: 'btn btn-primary btn-sm' %>
+            <%= link_to '🔍', event_param_path(event_param), class: 'btn btn-custom-color btn-sm', title: 'Показати' %>
             <% if current_user.can_manage_event_params? %>
-            <%= link_to 'Редагувати', edit_event_param_path(event_param), class: 'btn btn-secondary btn-sm' %>
-            <%= link_to 'Видалити', event_param_path(event_param), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-danger btn-sm' %>
+              <%= link_to '✏️', edit_event_param_path(event_param), class: 'btn btn-custom-color btn-sm', title: 'Редагувати' %>
+              <%= link_to '🗑️', event_param_path(event_param), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-custom-color btn-sm', title: 'Видалити' %>
             <% end %>
           </td>
         </tr>
@@ -31,4 +43,4 @@
   </table>
 </div>
 
-<%= link_to 'Назад', home_path %>
+<%= link_to 'Назад', home_path, class: 'btn-link' %>

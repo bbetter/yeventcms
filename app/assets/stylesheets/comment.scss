@@ -1,109 +1,138 @@
   @import '../styles/mediaQueries.scss';
-  .comments-section {
-    width: 100%;
-    margin-top: 20px;
-    transition: width 0.3s ease;
-      @include tablet {
-        width: 300px;
-        margin-top: 0;
-      }
-  }
-  
-  .comments-section .expand-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .comments-section .comments-content {
-    overflow: hidden;   
-    max-height: 0;
-    transition: max-height 0.3s ease;
-  }
-  
-  .comments-section.expanded {
-    width: 100%;
-    @include tablet {
-      width: 500px;
-    }
-  }
-  
-  .comments-section.expanded .comments-content {
-    max-height: 1000px; /* Adjust based on your content */
-  }
 
+.comments-section {
+  width: 100%;
+  margin-top: 20px;
+  transition: width 0.3s ease;
   @include tablet {
-    .comments-section {
-      width: 300px;
-      margin-top: 0;
-    }
+    width: 300px;
+    margin-top: 0;
+  }
+}
 
-    .comments-section.expanded {
-      width: 500px;
-    }
-  }
-  
-  .comment.bubble {
-    background-color: #f1f1f1;
-    border-radius: 10px;
-    padding: 15px;
-    position: relative;
-    margin-bottom: 15px;
-    max-width: 75%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .comment.bubble:before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    left: -10px; /* Adjust for left-aligned bubbles */
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid #f1f1f1;
-  }
-  
-  .comment .email {
-    font-size: 0.85em;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .comment .content {
-    font-size: 1em;
-    margin-bottom: 10px;
-  }
-  
-  .comment strong {
-    font-weight: bold;
-  }
-  
-  .comment ul {
-    padding-left: 20px;
-    margin-top: 5px;
-    text-align: left; /* Align the attachments to the left */
-  }
-  
-  .comment ul li {
-    list-style-type: none;
-    margin-bottom: 5px;
-  }
-  
-  .comment ul li a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .comment ul li a:hover {
-    text-decoration: underline;
+.comments-section .expand-button {
+  border-radius: 8px;
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.comments-section .comments-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+}
+
+.comments-section.expanded .comments-content {
+  max-height: 1000px; // adjust based on content size
+}
+
+.comments-slider {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.slider-nav {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  z-index: 10;
+}
+
+.prev {
+  left: -10px;
+}
+
+.next {
+  right: -10px;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.comment.bubble {
+  flex: 0 0 auto; // Запобігає зменшенню елементів
+  width: 300px; // Налаштуйте ширину кожного коментаря
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 15px 25px;
+  position: relative;
+  margin-right: 15px; // Простір між коментарями
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; // Сховати текст, що виходить за межі
+}
+
+.comment.bubble:before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #f1f1f1;
+}
+
+.comment .email {
+  font-size: 0.85em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.comment .content {
+  font-size: 1em;
+  margin-bottom: 10px;
+  overflow-wrap: break-word; // Перенос довгих слів на новий рядок
+}
+
+.comment strong {
+  font-weight: bold;
+}
+
+.comment ul {
+  padding-left: 20px;
+  margin-top: 5px;
+  text-align: left;
+}
+
+.comment ul li {
+  list-style-type: none;
+  margin-bottom: 5px;
+}
+
+.comment ul li a {
+  text-decoration: none;
+}
+
+.comment ul li a:hover {
+  text-decoration: underline;
+}
+
+@include tablet {
+  .comments-section {
+    width: 300px;
+    margin-top: 0;
   }
 
-  
+  .comments-section.expanded {
+    width: 500px;
+  }
+}

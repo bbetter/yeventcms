@@ -1,5 +1,7 @@
-<h1> Редагувати параметр</h1>
+<div class="title_container">
+  <h1> Редагувати параметр</h1>
+  <%= link_to 'Back', event_params_path, class: 'btn btn-custom-color' %>
+</div>
 
 <%= render 'form', event_param: @event_param, submit_text: 'Редагувати' %>
 
-<%= link_to 'Back', event_params_path, class: 'btn btn-secondary' %>

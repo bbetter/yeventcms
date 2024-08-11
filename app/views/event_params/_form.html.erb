@@ -1,4 +1,4 @@
-<%= form_with(model: @event_param, local: true) do |form| cl %>
+<%= form_with(model: @event_param, local: true, class: 'form_container') do |form| %>
   <% if @event_param.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@event_param.errors.count, "error") %> prohibited this event parameter from being saved:</h2>
@@ -21,6 +21,6 @@
   </div>
 
   <div class="form-group">
-    <%= form.submit submit_text, class: 'btn btn-primary' %>
+    <%= form.submit submit_text, class: 'btn btn_primary' %>
   </div>
 <% end %>
