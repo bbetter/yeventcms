@@ -1,4 +1,4 @@
-<%= form_with(model: [@event, @event.comments.build], local: true, html: { multipart: true }) do |form| %>
+<%= form_with(model: [@event, @event.comments.build], local: true, html: { multipart: true, class: 'form_container' }) do |form| %>
   <% if form.object.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(form.object.errors.count, "помилка") %> заважають зберегти цей коментар:</h2>
@@ -21,6 +21,6 @@
   </div>
 
   <div class="form-group">
-    <%= form.submit 'Додати коментар', class: 'btn btn-primary' %>
+    <%= form.submit 'Додати коментар', class: 'btn btn_primary' %>
   </div>
 <% end %>

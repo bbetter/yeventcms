@@ -1,5 +1,6 @@
-<h1>Подія</h1>
-
+<div class="title_container">
+  <h1>Подія</h1>
+  <%= link_to 'Назад', events_path, class: 'btn btn-custom-color' %>
+</div>
 <%= render 'form', event: @event, event_params: @event_params, submit_text: 'Редагувати' %>
 
-<%= link_to 'Назад', events_path, class: 'btn btn-secondary' %>

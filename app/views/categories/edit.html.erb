@@ -1,6 +1,7 @@
 <!-- app/views/categories/edit.html.erb -->
-<h1>Редагувати категорію</h1>
-
+<div class="title_container">
+  <h1>Редагувати категорію</h1>
+  <%= link_to 'Назад', categories_path, class: 'btn btn-custom-color' %>
+</div>
 <%= render 'form', category: @category, submit_text: "Редагувати"%>
 
-<%= link_to 'Назад', categories_path, class: 'btn btn-link' %>

@@ -1,13 +1,13 @@
 <!-- app/views/home/index.html.erb -->
-
+<div class="title_container">
 <h1>Дешборд</h1>
 
 <div>
-  <%= link_to 'Події', events_path, class: 'btn btn-primary' %>
-  <%= link_to 'Параметри Подій', event_params_path, class: 'btn btn-secondary' %>
-  <%= link_to 'Категорії', categories_path, class: 'btn btn-success' %>
+  <%= link_to 'Події', events_path, class: 'btn btn-custom-color' %>
+  <%= link_to 'Параметри Подій', event_params_path, class: 'btn btn-custom-color' %>
+  <%= link_to 'Категорії', categories_path, class: 'btn btn-custom-color' %>
 </div>
-
+</div>
 
 <div class="dashboard">
   <div class="latest-events">
@@ -15,7 +15,7 @@
     <ul>
       <% @latest_events.each do |event| %>
         <li>
-          <strong class="event-link"><%= link_to event.name, event_path(event) %></strong>
+          <strong><%= link_to event.name, event_path(event), class:'btn-link' %></strong>
           <p><%= event.description %></p>
           <p><strong>Категорія:</strong> <%= event.category.name %></p>
           <p><strong>Створено:</strong> <%= event.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
