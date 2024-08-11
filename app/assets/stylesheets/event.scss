@@ -1,13 +1,24 @@
+  @import '../styles/mediaQueries.scss';
 
 .event-container {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  @include tablet {
     flex-direction: row;
     justify-content: space-between;
   }
-  
+}
+
 .event-details {
-    flex: 1;
-    margin-right: 20px;
+  flex: 1;
+  margin-right: 20px;
+  width: 500px;
+  
+  @include tablet {
+    width: 100%;
+  }
 }
 
 .description-cell {
@@ -85,4 +96,33 @@
 
 .search-field {
   max-width: 40%;
+}
+
+.newEvent_container {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.form_container{
+  display: flex;
+  padding: 15px;
+  flex-direction: column;
+  border: 1px solid #d6d4d4;
+  border-radius: 15px;
+  box-shadow: 0 1px 3px rgba(140, 147, 153, 0.345);
+  background-color: #F5F8FB;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.btn_primary {
+  background-color: #005C7A;
+  color: white;
+  border: 1px solid #005C7A ;
+  width: 100%;
+}
+.btn_primary:hover {
+  background-color: #006b8f;
+  color: white;
 }
