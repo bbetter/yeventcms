@@ -1,8 +1,4 @@
-<div class="title_container">
-  <h1>Деталі Події</h1>
-  <%= link_to 'Назад', events_path, class: 'btn btn-custom-color btn-sm', title: 'Назад' %>
-</div>
-<div class="event-container">
+<div class="event-container" data-controller="attachment">
   <div class="event-details card mb-3">
     <div class="card-header text-white">
       <h2><%= @event.name %></h2>
@@ -12,7 +8,7 @@
         <strong>Категорія:</strong>
         <span class="badge badge-info"><%= @event.category.name %></span>
       </p>
-      
+
       <p class="card-text"><%= @event.description %></p>
 
       <% if @event.event_params.any? %>
@@ -24,24 +20,48 @@
         </ul>
       <% end %>
 
-      <% if @event.attachments.any? %>
-        <div class="attachments-section expanded">
-          <button class="expand-button btn btn-custom-color" onclick="toggleAttachments()">Вкладення (<%= @event.attachments.count %>)</button>
-          <div class="attachments-content">
-            <div class="attachments-slider">
-              <button class="slider-nav prev" onclick="scrollAttachments(-1)">&#9664;</button>
-              <div class="attachments-list">
-                <% @event.attachments.each do |attachment| %>
-                  <div class="attachment-item">
-                    <%= link_to attachment.filename.to_s, url_for(attachment) %>
-                  </div>
+      <% if @event.attachments.attached? %>
+    <div class="attachments-section" data-controller="attachment">
+      <button class="expand-button btn btn-custom-color" data-action="click->attachment#toggle">Вкладення (<%= @event.attachments.count %>)</button>
+      <div class="attachments-content" data-attachment-target="attachmentsContent" style="display: none;">
+        <% if @event.attachments.count >= 3 %>
+          <div class="attachments-slider">
+            <button class="slider-nav prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&lt;</button>
+            <div class="attachments-list">
+              <% @event.attachments.each do |attachment| %>
+                <div class="attachment-item">
+                  <span class="attachment-title"><%= attachment.filename.to_s %></span>
+                  <% if attachment.content_type.starts_with?('image/') %>
+                    <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                  <% elsif attachment.content_type == 'application/pdf' %>
+                    <img src="<%= asset_path('pdf-icon.svg') %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                  <% else %>
+                    <img src="<%= asset_path(get_icon_for(attachment.content_type)) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <button class="slider-nav next" data-action="click->attachment#scrollAttachments" data-direction="1">&gt;</button>
+          </div>
+        <% else %>
+          <div class="attachments-list">
+            <% @event.attachments.each do |attachment| %>
+              <div class="attachment-item">
+                <span class="attachment-title"><%= attachment.filename.to_s %></span>
+                <% if attachment.content_type.starts_with?('image/') %>
+                  <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                <% elsif attachment.content_type == 'application/pdf' %>
+                  <img src="<%= asset_path('pdf-icon.png') %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                <% else %>
+                  <img src="<%= asset_path(get_icon_for(attachment.content_type)) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
                 <% end %>
               </div>
-              <button class="slider-nav next" onclick="scrollAttachments(1)">&#9654;</button>
-            </div>
+            <% end %>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 
       <div class="platform-dates">
         <div>
@@ -76,11 +96,11 @@
     <button class="expand-button btn btn-custom-color" onclick="toggleComments()">Коментарі (<%= @event.comments.count %>)</button>
     <div class="comments-content">
       <div class="comments-slider">
-        <button class="slider-nav prev" onclick="scrollSlider(-1)">&#9650;</button>
+        <button class="slider-nav prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&#9650;</button>
         <div class="comments-list">
           <%= render @event.comments %>
         </div>
-        <button class="slider-nav next" onclick="scrollSlider(1)">&#9660;</button>
+        <button class="slider-nav next" data-action="click->attachment#scrollAttachments" data-direction="1">&#9660;</button>
       </div>
       <div>
         <%= render 'comments/form', commentable: @event, comment: Comment.new %>
@@ -97,18 +117,3 @@
     <%= link_to '🗑️', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-custom-color btn-sm', title: 'Видалити' %>
   <% end %>
 </div>
-<script>
-  function toggleComments() {
-    const commentsSection = document.querySelector('.comments-section');
-    commentsSection.classList.toggle('expanded');
-  }
-  function scrollSlider(direction) {
-  const slider = document.querySelector('.comments-list');
-  const scrollAmount = 300; // Кількість для прокрутки за клік
-  slider.scrollBy({
-    top: direction * scrollAmount,
-    behavior: 'smooth'
-  });
-}
-
-</script>
