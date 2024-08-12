@@ -21,47 +21,47 @@
       <% end %>
 
       <% if @event.attachments.attached? %>
-    <div class="attachments-section" data-controller="attachment">
-      <button class="expand-button btn btn-custom-color" data-action="click->attachment#toggle">Вкладення (<%= @event.attachments.count %>)</button>
-      <div class="attachments-content" data-attachment-target="attachmentsContent" style="display: none;">
-        <% if @event.attachments.count >= 3 %>
-          <div class="attachments-slider">
-            <button class="slider-nav comment-slider-prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&lt;</button>
-            <div class="attachments-list">
-              <% @event.attachments.each do |attachment| %>
-                <div class="attachment-item">
-                  <span class="attachment-title"><%= attachment.filename.to_s %></span>
-                  <% if attachment.content_type.starts_with?('image/') %>
-                    <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
-                  <% elsif attachment.content_type == 'application/pdf' %>
-                    <img src="<%= asset_path('pdf-icon.svg') %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
-                  <% else %>
-                    <img src="<%= asset_path(get_icon_for(attachment.content_type)) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+        <div class="attachments-section" data-controller="attachment">
+          <button class="expand-button btn btn-custom-color" data-action="click->attachment#toggle">Вкладення (<%= @event.attachments.count %>)</button>
+          <div class="attachments-content" data-attachment-target="attachmentsContent" style="display: none;">
+            <% if @event.attachments.count >= 3 %>
+              <div class="attachments-slider">
+                <button class="slider-nav comment-slider-prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&lt;</button>
+                <div class="attachments-list">
+                  <% @event.attachments.each do |attachment| %>
+                    <div class="attachment-item">
+                      <span class="attachment-title"><%= attachment.filename.to_s %></span>
+                      <% if attachment.content_type.starts_with?('image/') %>
+                        <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                      <% elsif attachment.content_type == 'application/pdf' %>
+                        <img src="<%= asset_path('pdf-icon.svg') %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                      <% else %>
+                        <img src="<%= asset_path(get_icon_for(attachment.content_type)) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                      <% end %>
+                    </div>
                   <% end %>
                 </div>
-              <% end %>
-            </div>
-            <button class="slider-nav comment-slider-next" data-action="click->attachment#scrollAttachments" data-direction="1">&gt;</button>
-          </div>
-        <% else %>
-          <div class="attachments-list">
-            <% @event.attachments.each do |attachment| %>
-              <div class="attachment-item">
-                <span class="attachment-title"><%= attachment.filename.to_s %></span>
-                <% if attachment.content_type.starts_with?('image/') %>
-                  <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
-                <% elsif attachment.content_type == 'application/pdf' %>
-                  <img src="<%= asset_path('pdf-icon.png') %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
-                <% else %>
-                  <img src="<%= asset_path(get_icon_for(attachment.content_type)) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                <button class="slider-nav comment-slider-next" data-action="click->attachment#scrollAttachments" data-direction="1">&gt;</button>
+              </div>
+            <% else %>
+              <div class="attachments-list">
+                <% @event.attachments.each do |attachment| %>
+                  <div class="attachment-item">
+                    <span class="attachment-title"><%= attachment.filename.to_s %></span>
+                    <% if attachment.content_type.starts_with?('image/') %>
+                      <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                    <% elsif attachment.content_type == 'application/pdf' %>
+                      <img src="<%= asset_path('pdf-icon.png') %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                    <% else %>
+                      <img src="<%= asset_path(get_icon_for(attachment.content_type)) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+                    <% end %>
+                  </div>
                 <% end %>
               </div>
             <% end %>
           </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+        </div>
+      <% end %>
 
       <div class="platform-dates">
         <div>
@@ -90,30 +90,29 @@
         </div>
       </div>
     </div>
+    <div class="buttons-container">
+      <% if current_user.can_open_event_edit? %>
+        <%= link_to '✏️', edit_event_path(@event), class: 'btn btn-custom-color btn-sm', title: 'Редагувати' %>
+      <% end %>
+      <% if current_user.can_delete_event? %>
+        <%= link_to '🗑️', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-custom-color btn-sm', title: 'Видалити' %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="comments-section expanded">
-    <button class="expand-button btn btn-custom-color" onclick="toggleComments()">Коментарі (<%= @event.comments.count %>)</button>
-    <div class="comments-content">
-      <div class="comments-slider">
-        <button class="slider-nav prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&#9650;</button>
-        <div class="comments-list">
-          <%= render @event.comments %>
-        </div>
-        <button class="slider-nav next" data-action="click->attachment#scrollAttachments" data-direction="1">&#9660;</button>
+  <div class="comments-section">
+  <button class="expand-button btn btn-custom-color" data-action="click->attachment#toggleComments">Коментарі (<%= @event.comments.count %>)</button>
+  <div class="comments-content" data-attachment-target="commentsContent">
+    <div class="comments-slider">
+      <button class="slider-nav prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&#9650;</button>
+      <div class="comments-list">
+        <%= render @event.comments %>
       </div>
-      <div>
-        <%= render 'comments/form', commentable: @event, comment: Comment.new %>
-      </div>
+      <button class="slider-nav next" data-action="click->attachment#scrollAttachments" data-direction="1">&#9660;</button>
+    </div>
+    <div>
+      <%= render 'comments/form', commentable: @event, comment: Comment.new %>
     </div>
   </div>
 </div>
-
-<div>
-  <% if current_user.can_open_event_edit? %>
-    <%= link_to '✏️', edit_event_path(@event), class: 'btn btn-custom-color btn-sm', title: 'Редагувати' %>
-  <% end %>
-  <% if current_user.can_delete_event? %>
-    <%= link_to '🗑️', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Ви впевнені?' }, class: 'btn btn-custom-color btn-sm', title: 'Видалити' %>
-  <% end %>
 </div>

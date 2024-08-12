@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="attachment"
 export default class extends Controller {
-  static targets = ["image", "modal", "title", "pdfEmbed", "attachmentsContent"]
+  static targets = ["image", "modal", "title", "pdfEmbed", "attachmentsContent", "commentsContent"]
 
   connect() {
     console.log("Attachment controller connected")
@@ -136,6 +136,20 @@ export default class extends Controller {
     } else {
       this.attachmentsContentTarget.style.display = "none";
       this.attachmentsContentTarget.classList.remove("expanded");
+    }
+  }
+
+  toggleComments() {
+    const content = this.commentsContentTarget;
+
+    if (content.classList.contains("expanded")) {
+      // Якщо контент розгорнуто, сховати його
+      content.style.maxHeight = "0";
+      content.classList.remove("expanded");
+    } else {
+      // Якщо контент прихований, показати його
+      content.style.maxHeight = content.scrollHeight + "px"; // Автоматичне визначення висоти
+      content.classList.add("expanded");
     }
   }
 }
