@@ -6,8 +6,8 @@
   <% if comment.attachments.any? %>
     <% if comment.attachments.count >= 3 %>
       <div class="attachments-slider" data-target="attachment.slider">
-        <button class="slider-nav prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&lt;</button>
-        <button class="slider-nav next" data-action="click->attachment#scrollAttachments" data-direction="1">&gt;</button>
+        <button class="slider-nav comment-slider-prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&lt;</button>
+        <button class="slider-nav comment-slider-next" data-action="click->attachment#scrollAttachments" data-direction="1">&gt;</button>
         <div class="attachments-list">
           <% comment.attachments.each do |attachment| %>
             <div class="attachment-item">
