@@ -1,106 +1,43 @@
-<!-- Коментарі з вкладеннями -->
-<div class="comment mb-3 bubble">
+<div class="comment mb-3 bubble" data-controller="attachment">
   <p class="email"><%= comment.user.email %></p>
   <p class="content"><%= comment.content %></p>
-  <span class="email">Вкладення: </span>
+  <span class="attachments">Вкладення: </span>
 
   <% if comment.attachments.any? %>
     <% if comment.attachments.count >= 3 %>
-      <div class="attachments-slider">
-        <button class="slider-nav prev" onclick="scrollAttachments(this, -1)">&lt;</button>
+      <div class="attachments-slider" data-target="attachment.slider">
+        <button class="slider-nav comment-slider-prev" data-action="click->attachment#scrollAttachments" data-direction="-1">&lt;</button>
+        <button class="slider-nav comment-slider-next" data-action="click->attachment#scrollAttachments" data-direction="1">&gt;</button>
         <div class="attachments-list">
           <% comment.attachments.each do |attachment| %>
             <div class="attachment-item">
               <span class="attachment-title"><%= attachment.filename.to_s %></span>
-              <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-toggle="modal" data-target="#attachmentModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>">
+              <% if attachment.content_type.starts_with?('image/') %>
+                <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+              <% elsif attachment.content_type == 'application/pdf' %>
+                <img src="<%= asset_path('pdf-icon.svg') %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+              <% else %>
+                <img src="<%= asset_path(get_icon_for(attachment.content_type)) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+              <% end %>
             </div>
           <% end %>
         </div>
-        <button class="slider-nav next" onclick="scrollAttachments(this, 1)">&gt;</button>
       </div>
     <% else %>
       <div class="attachments-list">
         <% comment.attachments.each do |attachment| %>
           <div class="attachment-item">
             <span class="attachment-title"><%= attachment.filename.to_s %></span>
-            <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-toggle="modal" data-target="#attachmentModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>">
+            <% if attachment.content_type.starts_with?('image/') %>
+              <img src="<%= url_for(attachment) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+            <% elsif attachment.content_type == 'application/pdf' %>
+              <img src="<%= asset_path('pdf-icon.svg') %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+            <% else %>
+              <img src="<%= asset_path(get_icon_for(attachment.content_type)) %>" alt="<%= attachment.filename.to_s %>" class="attachment-img" data-action="click->attachment#showModal" data-url="<%= url_for(attachment) %>" data-title="<%= attachment.filename.to_s %>" data-type="<%= attachment.content_type %>">
+            <% end %>
           </div>
         <% end %>
       </div>
     <% end %>
   <% end %>
 </div>
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-  const attachmentLinks = document.querySelectorAll('.attachment-img');
-
-  attachmentLinks.forEach(link => {
-    link.addEventListener('click', function () {
-      const imageUrl = this.getAttribute('data-url');
-      const title = this.getAttribute('data-title');
-
-      // Створення модального вікна і додавання його до DOM
-      if (!document.getElementById('attachmentModal')) {
-        const modalHTML = `
-          <div class="modal" id="attachmentModal">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Вкладення</h5>
-                  <button type="button" class="close" aria-label="Close" onclick="closeModal()">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <img id="attachment-image" src="" alt="Вкладення" class="img-fluid">
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-      }
-
-      // Налаштування модального вікна
-      const modal = document.getElementById('attachmentModal');
-      modal.querySelector('.modal-title').textContent = title;
-      const imageElement = modal.querySelector('#attachment-image');
-      if (imageElement) {
-        imageElement.src = imageUrl;
-      }
-
-      // Відкрити модальне вікно
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Заборонити прокрутку фону
-    });
-  });
-
-  // Функція для закриття модального вікна
-  window.closeModal = function () {
-    const modal = document.getElementById('attachmentModal');
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = ''; // Відновити прокрутку фону
-    }
-  };
-
-  // Закриття модального вікна при кліку на фон
-  document.addEventListener('click', function (event) {
-    const modal = document.getElementById('attachmentModal');
-    if (modal && event.target === modal) {
-      closeModal();
-    }
-  });
-});
-
-function scrollAttachments(button, direction) {
-  const slider = button.closest('.attachments-slider').querySelector('.attachments-list');
-  const scrollAmount = 300; // Кількість для прокрутки за клік
-  slider.scrollBy({
-    left: direction * scrollAmount,
-    behavior: 'smooth'
-  });
-}
-</script>
