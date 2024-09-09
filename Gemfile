@@ -33,7 +33,7 @@ gem 'bootstrap'
 gem "sassc-rails"
 
 #history
-gem 'paper_trail', '~> 15.1.0'
+gem 'paper_trail', '~> 15.2.0'
 
 #icons
 gem 'font-awesome-sass'
